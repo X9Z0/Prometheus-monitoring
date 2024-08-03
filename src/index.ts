@@ -1,12 +1,13 @@
 import express from "express";
 import { middleware } from "./middleware";
 import client from "prom-client";
-import { requestCountMiddleware } from "./metrics/requestCount";
+import { metricsMiddleware } from "./metrics";
 
 const app = express();
-app.use(requestCountMiddleware);
+
 app.use(express.json());
 app.use(middleware);
+app.use(metricsMiddleware);
 
 app.get("/user", (req, res) => {
   res.send({
