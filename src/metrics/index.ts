@@ -13,7 +13,6 @@ export const metricsMiddleware = (
 
   res.on("finish", function () {
     const endTime = Date.now();
-    const duration = endTime - startTime;
     console.log(`Request took ${endTime - startTime}ms`);
 
     // Increment request counter
@@ -29,7 +28,7 @@ export const metricsMiddleware = (
         route: req.route ? req.route.path : req.path,
         code: res.statusCode,
       },
-      duration
+      endTime - startTime
     );
 
     activeRequestGauge.dec();
